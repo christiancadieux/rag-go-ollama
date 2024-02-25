@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/christiancadieux/rag-go-ollama/pkg/ollama"
+	"github.com/christiancadieux/rag-go-ollama/pkg/ragollama"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -18,9 +18,9 @@ func main() {
 	doCalculate := flag.Bool("calculate", false, "calculate embeddings and update DB")
 	doAnswer := flag.Bool("answer", false, "answer question")
 	flag.Parse()
-	fmt.Println("Using LLM:", ollama.GetOllamaUrl())
+	fmt.Println("Using LLM:", ragollama.GetOllamaUrl())
 
-	ol := ollama.NewOllamaClient()
+	ol := ragollama.NewRagollama()
 
 	if *doAnswer {
 		ol.AnswerQuestion(*dbPath, *question1)

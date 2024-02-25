@@ -1,4 +1,4 @@
-package ollama
+package ragollama
 
 import (
 	"database/sql"
@@ -14,7 +14,7 @@ const (
 		 )`
 )
 
-func (ol *OllamaClient) CalculateEmbeddings(dbPath string) {
+func (ol *RagollamaClient) CalculateEmbeddings(dbPath string) {
 
 	db, err := sql.Open("sqlite3", dbPath)
 	checkErr(err)

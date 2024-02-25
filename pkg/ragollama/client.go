@@ -1,4 +1,4 @@
-package ollama
+package ragollama
 
 import (
 	"context"
@@ -15,7 +15,7 @@ import (
 const OLLAMA_URL = "http://alien:11434"
 const OLLAMA_MODEL = "mistral"
 
-type OllamaClient struct {
+type RagollamaClient struct {
 	config openai.ClientConfig
 	client *openai.Client
 	ctx    context.Context
@@ -37,9 +37,9 @@ func GetOllamaModel() string {
 	return ollama_model
 }
 
-func NewOllamaClient() *OllamaClient {
+func NewRagollama() *RagollamaClient {
 	cl, cfg := NewClientWithBase(GetOllamaUrl())
-	return &OllamaClient{client: cl, config: cfg, ctx: context.Background()}
+	return &RagollamaClient{client: cl, config: cfg, ctx: context.Background()}
 }
 
 func checkErr(err error) {
@@ -50,7 +50,7 @@ func checkErr(err error) {
 
 // getEmbedding invokes the OpenAI embedding API to calculate the embedding
 // for the given string. It returns the embedding.
-func (o *OllamaClient) GetEmbedding(data string) []float32 {
+func (o *RagollamaClient) GetEmbedding(data string) []float32 {
 
 	queryResponse, err := o.CreateEmbeddingsOllama(GetOllamaUrl(), GetOllamaModel(), data)
 
@@ -80,7 +80,7 @@ type ollama struct {
 	Prompt string `json:"prompt"`
 }
 
-func (o *OllamaClient) CreateEmbeddingsOllama(baseurl, llmModel string, data string) (*openai.EmbeddingResponse, error) {
+func (o *RagollamaClient) CreateEmbeddingsOllama(baseurl, llmModel string, data string) (*openai.EmbeddingResponse, error) {
 
 	url2 := baseurl + "/api/embeddings"
 	ol := ollama{}
@@ -134,7 +134,7 @@ type OllamaCompletionRequest struct {
 }
 
 // CreateChatCompletion — API call to Create a completion for the chat message.
-func (o *OllamaClient) CreateChatCompletion(request openai.ChatCompletionRequest) (response openai.ChatCompletionResponse, err error) {
+func (o *RagollamaClient) CreateChatCompletion(request openai.ChatCompletionRequest) (response openai.ChatCompletionResponse, err error) {
 	if request.Stream {
 		err = openai.ErrChatCompletionStreamNotSupported
 		return

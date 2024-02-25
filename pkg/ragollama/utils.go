@@ -1,4 +1,4 @@
-package ollama
+package ragollama
 
 import (
 	"bytes"
@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-func (o *OllamaClient) sendRequest(req *http.Request, v any) error {
+func (o *RagollamaClient) sendRequest(req *http.Request, v any) error {
 	req.Header.Set("Accept", "application/json; charset=utf-8")
 
 	// Check whether Content-Type is already set, Upload Files API requires
@@ -75,7 +75,7 @@ func handleErrorResp(resp *http.Response) error {
 	return errRes.Error
 }
 
-func (o *OllamaClient) newRequest(method, url string, setters ...requestOption) (*http.Request, error) {
+func (o *RagollamaClient) newRequest(method, url string, setters ...requestOption) (*http.Request, error) {
 	// Default Options
 	args := &requestOptions{
 		body:   nil,
@@ -105,7 +105,7 @@ func withBody(body any) requestOption {
 	}
 }
 
-func (o *OllamaClient) buildReq(
+func (o *RagollamaClient) buildReq(
 	method string,
 	url string,
 	body any,

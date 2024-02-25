@@ -1,4 +1,4 @@
-package ollama
+package ragollama
 
 import (
 	"database/sql"
@@ -19,7 +19,7 @@ const (
 	MAX_SCORES = 3
 )
 
-func (ol *OllamaClient) AnswerQuestion(dbPath string, question1 string) {
+func (ol *RagollamaClient) AnswerQuestion(dbPath string, question1 string) {
 
 	// Connect to the SQLite database
 	db, err := sql.Open("sqlite3", dbPath)
