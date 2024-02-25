@@ -44,7 +44,7 @@ func getOllamaModel() string {
 // It initializes the RagollamaClient with a new instance of the openai.Client and openai.ClientConfig using the NewClientWithBase() method.
 // It returns a pointer to the created RagollamaClient.
 func NewRagollama(dbPath string, url, model string) *RagollamaClient {
-	
+
 	if url == "" {
 		url = getOllamaUrl()
 	}

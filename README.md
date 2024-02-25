@@ -39,15 +39,16 @@ Ctrl-C
 export OLLAMA_URL=http://[your-ollama-server|localhost]:11434
 export OLLAMA_MODEL="mistral"    # default
 
-Run the chunker to populate the initial chunks DB:
+# Run the chunker to populate the initial chunks DB:
+# read all *.md files in ./docs
 
-$ go run ./cmd/rag --db rag.db --clear 
+$ go run ./cmd/rag --chunk --db rag.db --clear  --rootdir=./docs
 
-Calculate embeddings and store in DB:
+# Calculate embeddings and store in DB:
 
 $ go run ./cmd/rag --calculate --db rag.db
 
-Ask Question:
+# Ask Question:
 
 $ export RAG_Q='What is a RDEi team?'
 $ go run ./cmd/rag --answer --db rag.db
@@ -74,8 +75,9 @@ $ sqlite3 rag.db
 ```
 $ export GO=go; make
 
-go build -o rago ./cmd/rag/...
-./rago --chunk --db rag.db --clear 
+$ go build -o rago ./cmd/rag/...
+
+$ ./rago --chunk --db rag.db --clear 
 
 2024/02/24 20:14:45 Clearing DB table chunks
 2024/02/24 20:14:45 Chunking docs/rdei.md
@@ -88,7 +90,8 @@ docs/rdei3.md 0 416
 docs/rdei4.md 0 342
 Total tokens: 1121
 
-./rago  --calculate --db rag.db
+$ ./rago  --calculate --db rag.db
+
 github.com/christiancadieux/rag-go-ollama/pkg/ollama
 github.com/christiancadieux/rag-go-ollama/cmd/rag
 Using LLM: http://alien:11434
@@ -103,7 +106,8 @@ Inserting into embeddings, id 195
 Inserting into embeddings, id 196
 Inserting into embeddings, id 197
 
-./rago --answer --db rag.db
+$ ./rago --answer --db rag.db
+
 Using LLM: http://alien:11434
 path: docs/rdei.md, content: 146, embedding: 16384
 docs/rdei.md 0.107603274

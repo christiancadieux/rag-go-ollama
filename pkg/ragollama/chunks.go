@@ -55,6 +55,7 @@ func (ol *RagollamaClient) Chunks(clear bool, rootDir string) error {
 
 	tokTotal := 0
 	err = filepath.WalkDir(rootDir, func(path string, d fs.DirEntry, err error) error {
+		fmt.Println("scan ", path)
 		if filepath.Ext(path) == ".md" {
 			log.Printf("Chunking %v", path)
 			chunks, err := breakToChunks(path)
