@@ -19,6 +19,11 @@ $ ollama serve
 # load and test model
 $ ollama run mistral
 
+# run ollama on a different server
+$ export OLLAMA_HOST=[your-ollama-server]:11434
+$ ollama run mistral
+...
+
 ```
 
 ## USAGE
