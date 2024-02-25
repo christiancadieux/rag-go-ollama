@@ -19,6 +19,9 @@ func main() {
 	doClear := flag.Bool("clear", false, "clear DB table before inserting")
 	dbPath := flag.String("db", "rag.db", "DB name")
 
+	model := flag.String("m", "", "ai model (must already be loaded in ollama)")
+	ollamaUrl := flag.String("u", "", "ollama server url")
+
 	question1 := os.Getenv("RAG_Q")
 	if question1 == "" {
 		question1 = defaultQuestion
@@ -28,7 +31,7 @@ func main() {
 
 	flag.Parse()
 
-	ol := ragollama.NewRagollama(*dbPath)
+	ol := ragollama.NewRagollama(*dbPath, *ollamaUrl, *model)
 
 	ol.PrintInfo()
 

@@ -24,7 +24,7 @@ $ ollama serve
 # load and try model
 $ ollama run mistral
 
-# run ollama on a different server
+# run ollama when the LLM server is on a different host
 $ export OLLAMA_HOST=[your-ollama-server]:11434
 $ ollama run mistral
 ...

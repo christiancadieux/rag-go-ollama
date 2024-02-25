@@ -16,10 +16,12 @@ const OLLAMA_URL = "http://alien:11434"
 const OLLAMA_MODEL = "mistral"
 
 type RagollamaClient struct {
-	config openai.ClientConfig
-	client *openai.Client
-	ctx    context.Context
-	dbPath string
+	config    openai.ClientConfig
+	client    *openai.Client
+	ctx       context.Context
+	ollamaUrl string
+	model     string
+	dbPath    string
 }
 
 func getOllamaUrl() string {
@@ -41,20 +43,27 @@ func getOllamaModel() string {
 // NewRagollama creates a new instance of the RagollamaClient struct using the provided database path.
 // It initializes the RagollamaClient with a new instance of the openai.Client and openai.ClientConfig using the NewClientWithBase() method.
 // It returns a pointer to the created RagollamaClient.
-func NewRagollama(dbPath string) *RagollamaClient {
-	cl, cfg := NewClientWithBase(getOllamaUrl())
-	return &RagollamaClient{dbPath: dbPath, client: cl, config: cfg, ctx: context.Background()}
+func NewRagollama(dbPath string, url, model string) *RagollamaClient {
+	
+	if url == "" {
+		url = getOllamaUrl()
+	}
+	if model == "" {
+		model = getOllamaModel()
+	}
+	cl, cfg := NewClientWithBase(url)
+	return &RagollamaClient{model: model, ollamaUrl: url, dbPath: dbPath, client: cl, config: cfg, ctx: context.Background()}
 }
 
 func (o *RagollamaClient) PrintInfo() {
-	fmt.Printf("Using LLL=%s, model=%s \n", getOllamaUrl(), getOllamaModel())
+	fmt.Printf("Using LLM=%s, Model=%s \n", o.ollamaUrl, o.model)
 }
 
 // getEmbedding invokes the OpenAI embedding API to calculate the embedding
 // for the given string. It returns the embedding.
 func (o *RagollamaClient) GetEmbedding(data string) ([]float32, error) {
 
-	queryResponse, err := o.CreateEmbeddingsOllama(getOllamaUrl(), getOllamaModel(), data)
+	queryResponse, err := o.CreateEmbeddingsOllama(data)
 	if err != nil {
 		return nil, err
 	}
@@ -85,11 +94,11 @@ type ollama struct {
 
 // CreateEmbeddingsOllama invokes the OpenAI embedding API to calculate the embedding
 // for the given string. It returns the embedding.
-func (o *RagollamaClient) CreateEmbeddingsOllama(baseurl, llmModel string, data string) (*openai.EmbeddingResponse, error) {
+func (o *RagollamaClient) CreateEmbeddingsOllama(data string) (*openai.EmbeddingResponse, error) {
 
-	url2 := baseurl + "/api/embeddings"
+	url2 := o.ollamaUrl + "/api/embeddings"
 	ol := ollama{}
-	ol.Model = llmModel
+	ol.Model = o.model
 	ol.Prompt = data
 
 	data2, err := json.Marshal(ol)
