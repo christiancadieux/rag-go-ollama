@@ -5,7 +5,7 @@
 Golang Retrieval Augmented Generator (RAG) using ollama:
 
    - Pure GO implementation.
-   - Using O/S ollama LLMs running locally.
+   - Using ollama with O/S LLMs running locally (Mistral, Gemma etc..).
    - Using github.com/sashabaranov/go-openai.
    - Based on github.com/eliben/code-for-blog/2023/go-rag-openai - updated to use ollama.
 
