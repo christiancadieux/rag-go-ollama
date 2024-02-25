@@ -32,8 +32,7 @@ func (ol *RagollamaClient) CalculateEmbeddings() {
 	checkErr(err)
 	defer rows.Close()
 
-	// Step 1: calculate embeddings for all chunks in the DB, storing them in
-	// embs.
+	// calculate embeddings for all chunks in the DB, storing them in embs.
 	type embData struct {
 		id   int
 		data []byte

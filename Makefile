@@ -13,11 +13,11 @@ build:
 test: chunk calc q
 
 chunk:
-	./rago --chunk --db rag.db --clear 
+	./rago --chunk  --clear  --rootdir ./docs --db rag.db
 
 
 calc:
-	./rago --calculate --db rag.db
+	./rago --calculate
 
 q:
-	./rago --answer --db rag.db
+	./rago --answer

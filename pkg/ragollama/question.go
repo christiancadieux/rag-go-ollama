@@ -21,7 +21,6 @@ const (
 
 func (ol *RagollamaClient) AnswerQuestion(question1 string) {
 
-	// Connect to the SQLite database
 	db, err := sql.Open("sqlite3", ol.dbPath)
 	checkErr(err)
 	defer db.Close()
@@ -95,7 +94,6 @@ func (ol *RagollamaClient) AnswerQuestion(question1 string) {
 		}
 	}
 
-	// Build the prompt and execute the LLM API.
 	query := fmt.Sprintf(`Use the below information to answer the subsequent question.
 Information:
 %v
@@ -106,7 +104,7 @@ Question: %v`, contextInfo, question1)
 	start := time.Now()
 	resp, err := ol.CreateChatCompletion(
 		openai.ChatCompletionRequest{
-			Model: GetOllamaModel(), // openai.GPT3Dot5Turbo,
+			Model: GetOllamaModel(),
 			Messages: []openai.ChatCompletionMessage{
 				{
 					Role:    openai.ChatMessageRoleUser,
