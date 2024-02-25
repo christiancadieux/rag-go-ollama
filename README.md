@@ -9,7 +9,7 @@ Golang Retrieval Augmented Generator (RAG) using ollama:
    - Using github.com/sashabaranov/go-openai.
    - Based on github.com/eliben/code-for-blog/2023/go-rag-openai - updated to use ollama.
 
-https://cloud.google.com/blog/products/ai-machine-learning/generative-ai-applications-with-vertex-ai-palm-2-models-and-langchain
+https://eli.thegreenplace.net/2023/retrieval-augmented-generation-in-go/
 
 ![Figure-5-RAG_Architecture max-800x800](https://github.com/christiancadieux/rag-go-ollama/assets/10535265/18dbca63-46d2-4e90-8528-c08b114f226d)
    
