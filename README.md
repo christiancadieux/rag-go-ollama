@@ -70,9 +70,9 @@ $ sqlite3 rag.db
 ## Sample Run - default model: Mistral
 
 ```
-$ export GO=go; make build; make test
+$ export GO=go; make
 
-go22 build -o rago ./cmd/rag/...
+go build -o rago ./cmd/rag/...
 ./rago --chunk --db rag.db --clear 
 
 2024/02/24 20:14:45 Clearing DB table chunks

@@ -4,6 +4,7 @@
 # OLLAMA_MODEL=mistral
 # set export GO=go
 
+all: build test
 
 build:
 	${GO} build -o rago ./cmd/rag/...
