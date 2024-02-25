@@ -60,7 +60,7 @@ $ sqlite3 rag.db
 ## Sample Run - default model: Mistral
 
 ```
-$ make
+$ export GO=go; make
 go run ./cmd/chunker --outdb rag.db --clear --rootdir  ./docs
 2024/02/24 20:14:45 Clearing DB table chunks
 2024/02/24 20:14:45 Chunking docs/rdei.md
