@@ -22,7 +22,7 @@ type RagollamaClient struct {
 	dbPath string
 }
 
-func GetOllamaUrl() string {
+func getOllamaUrl() string {
 	ollama_url := os.Getenv("OLLAMA_URL")
 	if ollama_url == "" {
 		ollama_url = OLLAMA_URL
@@ -30,7 +30,7 @@ func GetOllamaUrl() string {
 	return ollama_url
 }
 
-func GetOllamaModel() string {
+func getOllamaModel() string {
 	ollama_model := os.Getenv("OLLAMA_MODEL")
 	if ollama_model == "" {
 		ollama_model = OLLAMA_MODEL
@@ -42,15 +42,19 @@ func GetOllamaModel() string {
 // It initializes the RagollamaClient with a new instance of the openai.Client and openai.ClientConfig using the NewClientWithBase() method.
 // It returns a pointer to the created RagollamaClient.
 func NewRagollama(dbPath string) *RagollamaClient {
-	cl, cfg := NewClientWithBase(GetOllamaUrl())
+	cl, cfg := NewClientWithBase(getOllamaUrl())
 	return &RagollamaClient{dbPath: dbPath, client: cl, config: cfg, ctx: context.Background()}
+}
+
+func (o *RagollamaClient) PrintInfo() {
+	fmt.Printf("Using LLL=%s, model=%s \n", getOllamaUrl(), getOllamaModel())
 }
 
 // getEmbedding invokes the OpenAI embedding API to calculate the embedding
 // for the given string. It returns the embedding.
 func (o *RagollamaClient) GetEmbedding(data string) ([]float32, error) {
 
-	queryResponse, err := o.CreateEmbeddingsOllama(GetOllamaUrl(), GetOllamaModel(), data)
+	queryResponse, err := o.CreateEmbeddingsOllama(getOllamaUrl(), getOllamaModel(), data)
 	if err != nil {
 		return nil, err
 	}

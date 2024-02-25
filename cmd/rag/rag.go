@@ -26,7 +26,7 @@ func main() {
 
 	ol := ragollama.NewRagollama(*dbPath)
 
-	fmt.Printf("Using LLL=%s, model=%s \n", ragollama.GetOllamaUrl(), ragollama.GetOllamaModel())
+	ol.PrintInfo()
 
 	var err error
 

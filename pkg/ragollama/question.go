@@ -135,7 +135,7 @@ Question: %v`, contextInfo, question1)
 
 	resp, err := ol.CreateChatCompletion(
 		openai.ChatCompletionRequest{
-			Model: GetOllamaModel(),
+			Model: getOllamaModel(),
 			Messages: []openai.ChatCompletionMessage{
 				{
 					Role:    openai.ChatMessageRoleUser,
