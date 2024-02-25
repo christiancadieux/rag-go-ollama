@@ -2,7 +2,9 @@ package ollama
 
 import (
 	"bytes"
+	"encoding/binary"
 	"encoding/json"
+	"github.com/chewxy/math32"
 	"github.com/sashabaranov/go-openai"
 	"io"
 	"net/http"
@@ -130,4 +132,48 @@ func (o *OllamaClient) buildReq(
 		req.Header = header
 	}
 	return
+}
+
+// encodeEmbedding encodes an embedding into a byte buffer, e.g. for DB
+// storage as a blob.
+func encodeEmbedding(emb []float32) []byte {
+	buf := new(bytes.Buffer)
+	for _, f := range emb {
+		err := binary.Write(buf, binary.LittleEndian, f)
+		checkErr(err)
+	}
+	return buf.Bytes()
+}
+
+// decodeEmbedding decodes an embedding back from a byte buffer.
+func decodeEmbedding(b []byte) []float32 {
+	var numbers []float32
+	buf := bytes.NewReader(b)
+
+	// Calculate how many float32 values are in the slice
+	count := buf.Len() / 4
+
+	for i := 0; i < count; i++ {
+		var num float32
+		err := binary.Read(buf, binary.LittleEndian, &num)
+		checkErr(err)
+		numbers = append(numbers, num)
+	}
+	return numbers
+}
+
+// cosineSimilarity calculates cosine similarity (magnitude-adjusted dot
+// product) between two vectors that must be of the same size.
+func cosineSimilarity(a, b []float32) float32 {
+	if len(a) != len(b) {
+		panic("different lengths")
+	}
+
+	var aMag, bMag, dotProduct float32
+	for i := 0; i < len(a); i++ {
+		aMag += a[i] * a[i]
+		bMag += b[i] * b[i]
+		dotProduct += a[i] * b[i]
+	}
+	return dotProduct / (math32.Sqrt(aMag) * math32.Sqrt(bMag))
 }
