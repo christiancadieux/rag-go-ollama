@@ -24,6 +24,10 @@ const (
      );`
 )
 
+// Chunks breaks the files in the root directory into chunks and inserts them into the chunks table in the SQLite database.
+// If clear is true, the chunks table will be cleared before inserting new chunks.
+// Each chunk includes the file path, the chunk number, and the content of the chunk.
+// An error is returned if there is any issue with the SQLite database or with the chunking process.
 func (ol *RagollamaClient) Chunks(clear bool, rootDir string) error {
 
 	db, err := sql.Open("sqlite3", ol.dbPath)

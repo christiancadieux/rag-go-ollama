@@ -100,6 +100,12 @@ func (ol *RagollamaClient) getContextInfo(qEmb []float32, rows *sql.Rows, max_sc
 
 }
 
+// AnswerQuestion answers the given question by generating a response using OpenAI's chat completion API.
+// It first retrieves the necessary rows from the database by calling the getRows() method.
+// Then, it obtains the question's embedding by calling the GetEmbedding() method.
+// Next, it retrieves the context information by calling the getContextInfo() method.
+// It creates a chat completion request with the obtained context and the question, and sends it to the chat completion API.
+// Finally, it prints the response and returns nil or an error if any occurred.
 func (ol *RagollamaClient) AnswerQuestion(question1 string) error {
 
 	rows, err := ol.getRows()

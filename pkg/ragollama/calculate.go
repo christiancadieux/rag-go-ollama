@@ -14,6 +14,7 @@ const (
 		 )`
 )
 
+// CalculateEmbeddings calculates embeddings for all chunks in the database and stores them in the embeddings table.
 func (ol *RagollamaClient) CalculateEmbeddings() error {
 
 	db, err := sql.Open("sqlite3", ol.dbPath)

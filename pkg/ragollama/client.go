@@ -38,6 +38,9 @@ func GetOllamaModel() string {
 	return ollama_model
 }
 
+// NewRagollama creates a new instance of the RagollamaClient struct using the provided database path.
+// It initializes the RagollamaClient with a new instance of the openai.Client and openai.ClientConfig using the NewClientWithBase() method.
+// It returns a pointer to the created RagollamaClient.
 func NewRagollama(dbPath string) *RagollamaClient {
 	cl, cfg := NewClientWithBase(GetOllamaUrl())
 	return &RagollamaClient{dbPath: dbPath, client: cl, config: cfg, ctx: context.Background()}
@@ -76,6 +79,8 @@ type ollama struct {
 	Prompt string `json:"prompt"`
 }
 
+// CreateEmbeddingsOllama invokes the OpenAI embedding API to calculate the embedding
+// for the given string. It returns the embedding.
 func (o *RagollamaClient) CreateEmbeddingsOllama(baseurl, llmModel string, data string) (*openai.EmbeddingResponse, error) {
 
 	url2 := baseurl + "/api/embeddings"
