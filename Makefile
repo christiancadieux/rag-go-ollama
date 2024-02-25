@@ -23,4 +23,4 @@ q:
 	./rago --answer
 
 q2:
-	./rago --answer -q 'What is RDEI'
+	export RAG_Q='What is RDEI?'; ./rago --answer 

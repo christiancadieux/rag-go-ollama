@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/christiancadieux/rag-go-ollama/pkg/ragollama"
 	_ "github.com/mattn/go-sqlite3"
+	"os"
 )
 
 const (
@@ -18,7 +19,10 @@ func main() {
 	doClear := flag.Bool("clear", false, "clear DB table before inserting")
 	dbPath := flag.String("db", "rag.db", "DB name")
 
-	question1 := flag.String("q", defaultQuestion, "question")
+	question1 := os.Getenv("RAG_Q")
+	if question1 == "" {
+		question1 = defaultQuestion
+	}
 	doCalculate := flag.Bool("calculate", false, "calculate embeddings and update DB")
 	doAnswer := flag.Bool("answer", false, "answer question")
 
@@ -43,7 +47,7 @@ func main() {
 		}
 
 	} else if *doAnswer {
-		err = ol.AnswerQuestion(*question1)
+		err = ol.AnswerQuestion(question1)
 		if err != nil {
 			fmt.Printf("AnwerQuestion - %v \n", err)
 		}

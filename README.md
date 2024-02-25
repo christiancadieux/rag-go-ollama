@@ -48,6 +48,7 @@ $ go run ./cmd/rag --calculate --db rag.db
 
 Ask Question:
 
+$ export RAG_Q='What is a RDEi team?'
 $ go run ./cmd/rag --answer --db rag.db
 
 ```
