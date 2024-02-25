@@ -1,5 +1,5 @@
 
-## RaGoLama
+## RaGoLLama
 
 Golang Retrieval Augmented Generator (RAG) using ollama:
 
