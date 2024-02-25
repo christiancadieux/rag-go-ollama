@@ -193,80 +193,80 @@ RDEI teams are logical and resource dividers for groups of users within RDEI. Th
 ## OLLAMA LOG: loading/using gemma
 
 ```
-Feb 24 20:27:27 alien start_ollama[35136]: llama_model_loader: - type  f32:   57 tensors
-Feb 24 20:27:27 alien start_ollama[35136]: llama_model_loader: - type q4_0:  196 tensors
-Feb 24 20:27:27 alien start_ollama[35136]: llama_model_loader: - type q8_0:    1 tensors
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_vocab: mismatch in special tokens definition ( 416/256000 vs 260/256000 ).
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: format           = GGUF V3 (latest)
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: arch             = gemma
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: vocab type       = SPM
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_vocab          = 256000
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_merges         = 0
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_ctx_train      = 8192
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_embd           = 3072
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_head           = 16
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_head_kv        = 16
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_layer          = 28
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_rot            = 192
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_embd_head_k    = 256
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_embd_head_v    = 256
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_gqa            = 1
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_embd_k_gqa     = 4096
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_embd_v_gqa     = 4096
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: f_norm_eps       = 0.0e+00
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: f_norm_rms_eps   = 1.0e-06
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: f_clamp_kqv      = 0.0e+00
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: f_max_alibi_bias = 0.0e+00
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_ff             = 24576
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_expert         = 0
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_expert_used    = 0
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: rope scaling     = linear
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: freq_base_train  = 10000.0
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: freq_scale_train = 1
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: n_yarn_orig_ctx  = 8192
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: rope_finetuned   = unknown
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: model type       = 7B
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: model ftype      = Q4_0
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: model params     = 8.54 B
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: model size       = 4.84 GiB (4.87 BPW)
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: general.name     = gemma-7b-it
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: BOS token        = 2 '<bos>'
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: EOS token        = 1 '<eos>'
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: UNK token        = 3 '<unk>'
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: PAD token        = 0 '<pad>'
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_print_meta: LF token         = 227 '<0x0A>'
-Feb 24 20:27:27 alien start_ollama[35136]: llm_load_tensors: ggml ctx size =    0.19 MiB
-Feb 24 20:27:28 alien start_ollama[35136]: llm_load_tensors: offloading 28 repeating layers to GPU
-Feb 24 20:27:28 alien start_ollama[35136]: llm_load_tensors: offloading non-repeating layers to GPU
-Feb 24 20:27:28 alien start_ollama[35136]: llm_load_tensors: offloaded 29/29 layers to GPU
-Feb 24 20:27:28 alien start_ollama[35136]: llm_load_tensors:        CPU buffer size =   796.88 MiB
-Feb 24 20:27:28 alien start_ollama[35136]: llm_load_tensors:      CUDA0 buffer size =  4955.54 MiB
-Feb 24 20:27:29 alien start_ollama[35136]: ...........................................................................
-Feb 24 20:27:29 alien start_ollama[35136]: llama_new_context_with_model: n_ctx      = 2048
-Feb 24 20:27:29 alien start_ollama[35136]: llama_new_context_with_model: freq_base  = 10000.0
-Feb 24 20:27:29 alien start_ollama[35136]: llama_new_context_with_model: freq_scale = 1
-Feb 24 20:27:29 alien start_ollama[35136]: ggml_init_cublas: GGML_CUDA_FORCE_MMQ:   yes
-Feb 24 20:27:29 alien start_ollama[35136]: ggml_init_cublas: CUDA_USE_TENSOR_CORES: no
-Feb 24 20:27:29 alien start_ollama[35136]: ggml_init_cublas: found 1 CUDA devices:
-Feb 24 20:27:29 alien start_ollama[35136]:   Device 0: NVIDIA GeForce RTX 3080, compute capability 8.6, VMM: yes
-Feb 24 20:27:29 alien start_ollama[35136]: llama_kv_cache_init:      CUDA0 KV buffer size =   896.00 MiB
-Feb 24 20:27:29 alien start_ollama[35136]: llama_new_context_with_model: KV self size  =  896.00 MiB, K (f16):  448.00 MiB, V (f16):  448.00 MiB
-Feb 24 20:27:29 alien start_ollama[35136]: llama_new_context_with_model:  CUDA_Host input buffer size   =    11.02 MiB
-Feb 24 20:27:29 alien start_ollama[35136]: llama_new_context_with_model:      CUDA0 compute buffer size =   506.00 MiB
-Feb 24 20:27:29 alien start_ollama[35136]: llama_new_context_with_model:  CUDA_Host compute buffer size =     6.00 MiB
-Feb 24 20:27:29 alien start_ollama[35136]: llama_new_context_with_model: graph splits (measure): 3
-Feb 24 20:27:29 alien start_ollama[35136]: time=2024-02-24T20:27:29.236-07:00 level=INFO source=dyn_ext_server.go:161 msg="Starting llama main loop"
-Feb 24 20:27:29 alien start_ollama[35136]: [GIN] 2024/02/24 - 20:27:29 | 200 |  3.948269702s |    192.168.0.51 | POST     "/api/embeddings"
-Feb 24 20:27:29 alien start_ollama[35136]: [GIN] 2024/02/24 - 20:27:29 | 200 |   97.863419ms |    192.168.0.51 | POST     "/api/embeddings"
-Feb 24 20:27:29 alien start_ollama[35136]: [GIN] 2024/02/24 - 20:27:29 | 200 |   99.882903ms |    192.168.0.51 | POST     "/api/embeddings"
-Feb 24 20:27:29 alien start_ollama[35136]: [GIN] 2024/02/24 - 20:27:29 | 200 |  101.099916ms |    192.168.0.51 | POST     "/api/embeddings"
-Feb 24 20:27:29 alien start_ollama[35136]: [GIN] 2024/02/24 - 20:27:29 | 200 |  117.700645ms |    192.168.0.51 | POST     "/api/embeddings"
-Feb 24 20:27:29 alien start_ollama[35136]: [GIN] 2024/02/24 - 20:27:29 | 200 |  117.487306ms |    192.168.0.51 | POST     "/api/embeddings"
-Feb 24 20:27:29 alien start_ollama[35136]: [GIN] 2024/02/24 - 20:27:29 | 200 |   99.514093ms |    192.168.0.51 | POST     "/api/embeddings"
-Feb 24 20:27:30 alien start_ollama[35136]: [GIN] 2024/02/24 - 20:27:30 | 200 |    99.77478ms |    192.168.0.51 | POST     "/api/embeddings"
-Feb 24 20:27:30 alien start_ollama[35136]: [GIN] 2024/02/24 - 20:27:30 | 200 |    97.42509ms |    192.168.0.51 | POST     "/api/embeddings"
-Feb 24 20:27:30 alien start_ollama[35136]: [GIN] 2024/02/24 - 20:27:30 | 200 |   95.765198ms |    192.168.0.51 | POST     "/api/embeddings"
-Feb 24 20:27:31 alien start_ollama[35136]: [GIN] 2024/02/24 - 20:27:31 | 200 |  790.455482ms |    192.168.0.51 | POST     "/v1/chat/completions"
+Feb 24 20:27:27: llama_model_loader: - type  f32:   57 tensors
+Feb 24 20:27:27: llama_model_loader: - type q4_0:  196 tensors
+Feb 24 20:27:27: llama_model_loader: - type q8_0:    1 tensors
+Feb 24 20:27:27: llm_load_vocab: mismatch in special tokens definition ( 416/256000 vs 260/256000 ).
+Feb 24 20:27:27: llm_load_print_meta: format           = GGUF V3 (latest)
+Feb 24 20:27:27: llm_load_print_meta: arch             = gemma
+Feb 24 20:27:27: llm_load_print_meta: vocab type       = SPM
+Feb 24 20:27:27: llm_load_print_meta: n_vocab          = 256000
+Feb 24 20:27:27: llm_load_print_meta: n_merges         = 0
+Feb 24 20:27:27: llm_load_print_meta: n_ctx_train      = 8192
+Feb 24 20:27:27: llm_load_print_meta: n_embd           = 3072
+Feb 24 20:27:27: llm_load_print_meta: n_head           = 16
+Feb 24 20:27:27: llm_load_print_meta: n_head_kv        = 16
+Feb 24 20:27:27: llm_load_print_meta: n_layer          = 28
+Feb 24 20:27:27: llm_load_print_meta: n_rot            = 192
+Feb 24 20:27:27: llm_load_print_meta: n_embd_head_k    = 256
+Feb 24 20:27:27: llm_load_print_meta: n_embd_head_v    = 256
+Feb 24 20:27:27: llm_load_print_meta: n_gqa            = 1
+Feb 24 20:27:27: llm_load_print_meta: n_embd_k_gqa     = 4096
+Feb 24 20:27:27: llm_load_print_meta: n_embd_v_gqa     = 4096
+Feb 24 20:27:27: llm_load_print_meta: f_norm_eps       = 0.0e+00
+Feb 24 20:27:27: llm_load_print_meta: f_norm_rms_eps   = 1.0e-06
+Feb 24 20:27:27: llm_load_print_meta: f_clamp_kqv      = 0.0e+00
+Feb 24 20:27:27: llm_load_print_meta: f_max_alibi_bias = 0.0e+00
+Feb 24 20:27:27: llm_load_print_meta: n_ff             = 24576
+Feb 24 20:27:27: llm_load_print_meta: n_expert         = 0
+Feb 24 20:27:27: llm_load_print_meta: n_expert_used    = 0
+Feb 24 20:27:27: llm_load_print_meta: rope scaling     = linear
+Feb 24 20:27:27: llm_load_print_meta: freq_base_train  = 10000.0
+Feb 24 20:27:27: llm_load_print_meta: freq_scale_train = 1
+Feb 24 20:27:27: llm_load_print_meta: n_yarn_orig_ctx  = 8192
+Feb 24 20:27:27: llm_load_print_meta: rope_finetuned   = unknown
+Feb 24 20:27:27: llm_load_print_meta: model type       = 7B
+Feb 24 20:27:27: llm_load_print_meta: model ftype      = Q4_0
+Feb 24 20:27:27: llm_load_print_meta: model params     = 8.54 B
+Feb 24 20:27:27: llm_load_print_meta: model size       = 4.84 GiB (4.87 BPW)
+Feb 24 20:27:27: llm_load_print_meta: general.name     = gemma-7b-it
+Feb 24 20:27:27: llm_load_print_meta: BOS token        = 2 '<bos>'
+Feb 24 20:27:27: llm_load_print_meta: EOS token        = 1 '<eos>'
+Feb 24 20:27:27: llm_load_print_meta: UNK token        = 3 '<unk>'
+Feb 24 20:27:27: llm_load_print_meta: PAD token        = 0 '<pad>'
+Feb 24 20:27:27: llm_load_print_meta: LF token         = 227 '<0x0A>'
+Feb 24 20:27:27: llm_load_tensors: ggml ctx size =    0.19 MiB
+Feb 24 20:27:28: llm_load_tensors: offloading 28 repeating layers to GPU
+Feb 24 20:27:28: llm_load_tensors: offloading non-repeating layers to GPU
+Feb 24 20:27:28: llm_load_tensors: offloaded 29/29 layers to GPU
+Feb 24 20:27:28: llm_load_tensors:        CPU buffer size =   796.88 MiB
+Feb 24 20:27:28: llm_load_tensors:      CUDA0 buffer size =  4955.54 MiB
+Feb 24 20:27:29: ...........................................................................
+Feb 24 20:27:29: llama_new_context_with_model: n_ctx      = 2048
+Feb 24 20:27:29: llama_new_context_with_model: freq_base  = 10000.0
+Feb 24 20:27:29: llama_new_context_with_model: freq_scale = 1
+Feb 24 20:27:29: ggml_init_cublas: GGML_CUDA_FORCE_MMQ:   yes
+Feb 24 20:27:29: ggml_init_cublas: CUDA_USE_TENSOR_CORES: no
+Feb 24 20:27:29: ggml_init_cublas: found 1 CUDA devices:
+Feb 24 20:27:29:   Device 0: NVIDIA GeForce RTX 3080, compute capability 8.6, VMM: yes
+Feb 24 20:27:29: llama_kv_cache_init:      CUDA0 KV buffer size =   896.00 MiB
+Feb 24 20:27:29: llama_new_context_with_model: KV self size  =  896.00 MiB, K (f16):  448.00 MiB, V (f16):  448.00 MiB
+Feb 24 20:27:29: llama_new_context_with_model:  CUDA_Host input buffer size   =    11.02 MiB
+Feb 24 20:27:29: llama_new_context_with_model:      CUDA0 compute buffer size =   506.00 MiB
+Feb 24 20:27:29: llama_new_context_with_model:  CUDA_Host compute buffer size =     6.00 MiB
+Feb 24 20:27:29: llama_new_context_with_model: graph splits (measure): 3
+Feb 24 20:27:29: time=2024-02-24T20:27:29.236-07:00 level=INFO source=dyn_ext_server.go:161 msg="Starting llama main loop"
+Feb 24 20:27:29: [GIN] 2024/02/24 - 20:27:29 | 200 |  3.948269702s |    192.168.0.51 | POST     "/api/embeddings"
+Feb 24 20:27:29: [GIN] 2024/02/24 - 20:27:29 | 200 |   97.863419ms |    192.168.0.51 | POST     "/api/embeddings"
+Feb 24 20:27:29: [GIN] 2024/02/24 - 20:27:29 | 200 |   99.882903ms |    192.168.0.51 | POST     "/api/embeddings"
+Feb 24 20:27:29: [GIN] 2024/02/24 - 20:27:29 | 200 |  101.099916ms |    192.168.0.51 | POST     "/api/embeddings"
+Feb 24 20:27:29: [GIN] 2024/02/24 - 20:27:29 | 200 |  117.700645ms |    192.168.0.51 | POST     "/api/embeddings"
+Feb 24 20:27:29: [GIN] 2024/02/24 - 20:27:29 | 200 |  117.487306ms |    192.168.0.51 | POST     "/api/embeddings"
+Feb 24 20:27:29: [GIN] 2024/02/24 - 20:27:29 | 200 |   99.514093ms |    192.168.0.51 | POST     "/api/embeddings"
+Feb 24 20:27:30: [GIN] 2024/02/24 - 20:27:30 | 200 |    99.77478ms |    192.168.0.51 | POST     "/api/embeddings"
+Feb 24 20:27:30: [GIN] 2024/02/24 - 20:27:30 | 200 |    97.42509ms |    192.168.0.51 | POST     "/api/embeddings"
+Feb 24 20:27:30: [GIN] 2024/02/24 - 20:27:30 | 200 |   95.765198ms |    192.168.0.51 | POST     "/api/embeddings"
+Feb 24 20:27:31: [GIN] 2024/02/24 - 20:27:31 | 200 |  790.455482ms |    192.168.0.51 | POST     "/v1/chat/completions"
 
 ```
 
