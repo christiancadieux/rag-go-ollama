@@ -24,3 +24,4 @@ q:
 
 q2:
 	export RAG_Q='What is RDEI?'; ./rago --answer -m gemma
+

@@ -167,39 +167,55 @@ Response.choices[0]:
 ```
 $ export OLLAMA_MODEL=gemma
 # make sure you have loaded gemma with `ollama pull gemma` on your LLM server.
-$ make test
-...
+$ make q2
 
-Question: what is a RDEI team? 
-===================================
+export RAG_Q='What is RDEI?'; ./rago --answer -m gemma
 
-Got response, ID: chatcmpl-261 Duration: 762.522581ms
+Using LLM=http://alien:11434, Model=gemma 
+path: docs/rdei.md, score: 0.87248415, content: 146, embedding: 12288
+path: docs/rdei2.md, score: 0.8968806, content: 281, embedding: 12288
+path: docs/rdei3.md, score: 0.8692781, content: 416, embedding: 12288
+path: docs/rdei4.md, score: 0.86678493, content: 342, embedding: 12288
+--------------- QUERY -------------------
+ Use the below information to answer the subsequent question.
+Information:
+
+RDEI teams are a logical and resource divider for groups of users within RDEI. Teams let you organize users as well as discern between who can and can not create resources or tokens for the team. See [ Access Guide ]. RDEI is defined as Rapid Deployment of Elastic Infrastructure.
+
+Algorithms and data structures are central to computer science.[8] The theory of computation concerns abstract models of computation and general classes of problems that can be solved using them. The fields of cryptography and computer security involve studying the means for secure communication and for preventing security vulnerabilities.
+
+Computer science is the study of computation, information, and automation.[1][2][3] Computer science spans theoretical disciplines (such as algorithms, theory of computation, and information theory) to applied disciplines (including the design and implementation of hardware and software).[4][5][6] Though more often considered an academic discipline, computer science is closely related to computer programming.[7]
+
+
+Question: What is RDEI? 
+-------------------------------------------
+
+Got response, ID: chatcmpl-469 Duration: 458.567025ms
 {
-  "id": "chatcmpl-261",
+  "id": "chatcmpl-469",
   "object": "chat.completion",
-  "created": 1708831799,
+  "created": 1708895267,
   "model": "gemma",
   "choices": [
     {
       "index": 0,
       "message": {
         "role": "assistant",
-        "content": "Sure, here is the answer:\n\nRDEI teams are logical and resource dividers for groups of users within RDEI. They let you organize users as well as discern between who can and can not create resources or tokens for the team."
+        "content": "Sure, here is the answer to the question:\n\nRDEI is defined as Rapid Deployment of Elastic Infrastructure."
       },
       "finish_reason": "stop"
     }
   ],
   "usage": {
-    "prompt_tokens": 252,
-    "completion_tokens": 50,
-    "total_tokens": 302
+    "prompt_tokens": 221,
+    "completion_tokens": 24,
+    "total_tokens": 245
   }
 }
 Response.choices[0]:
-Sure, here is the answer:
+Sure, here is the answer to the question:
 
-RDEI teams are logical and resource dividers for groups of users within RDEI. They let you organize users as well as discern between who can and can not create resources or tokens for the team.
-
+RDEI is defined as Rapid Deployment of Elastic Infrastructure.
 
 ```
 
