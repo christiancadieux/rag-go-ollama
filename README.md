@@ -2,7 +2,7 @@
 ## RaGoLLama
 
 
-Golang Retrieval Augmented Generator (RAG) using ollama:
+Golang Retrieval-Augmented Generation (RAG) application using ollama:
 
    - Pure GO implementation.
    - Using ollama with O/S LLMs running locally (Mistral, Gemma etc..).
