@@ -2,15 +2,16 @@
 # DEFAULT ENV-VAR
 # OLLAMA_URL=http://alien:11434
 # OLLAMA_MODEL=mistral
+# set export GO=go
 
 all: chunk calc q
 
 chunk:
-	go run ./cmd/chunker --outdb rag.db --clear 
+	${GO} run ./cmd/chunker --outdb rag.db --clear 
 
 
 calc:
-	go run -v  ./cmd/rag --calculate --db rag.db
+	${GO} run -v  ./cmd/rag --calculate --db rag.db
 
 q:
-	go run ./cmd/rag --answer --db rag.db
+	${GO} run ./cmd/rag --answer --db rag.db
