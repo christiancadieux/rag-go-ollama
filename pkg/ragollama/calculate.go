@@ -14,9 +14,9 @@ const (
 		 )`
 )
 
-func (ol *RagollamaClient) CalculateEmbeddings(dbPath string) {
+func (ol *RagollamaClient) CalculateEmbeddings() {
 
-	db, err := sql.Open("sqlite3", dbPath)
+	db, err := sql.Open("sqlite3", ol.dbPath)
 	checkErr(err)
 	defer db.Close()
 

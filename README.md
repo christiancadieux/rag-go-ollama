@@ -40,11 +40,11 @@ export OLLAMA_MODEL="mistral"    # default
 
 Run the chunker to populate the initial chunks DB:
 
-$ go run ./cmd/chunker --outdb rag.db --clear 
+$ go run ./cmd/rag --db rag.db --clear 
 
 Calculate embeddings and store in DB:
 
-$  go run ./cmd/rag --calculate --db rag.db
+$ go run ./cmd/rag --calculate --db rag.db
 
 Ask Question:
 
@@ -70,8 +70,11 @@ $ sqlite3 rag.db
 ## Sample Run - default model: Mistral
 
 ```
-$ export GO=go; make
-go run ./cmd/chunker --outdb rag.db --clear --rootdir  ./docs
+$ export GO=go; make build; make test
+
+go22 build -o rago ./cmd/rag/...
+./rago --chunk --db rag.db --clear 
+
 2024/02/24 20:14:45 Clearing DB table chunks
 2024/02/24 20:14:45 Chunking docs/rdei.md
 docs/rdei.md 0 146
@@ -83,7 +86,7 @@ docs/rdei3.md 0 416
 docs/rdei4.md 0 342
 Total tokens: 1121
 
-go22 run -v  ./cmd/rag --calculate --db rag.db
+./rago  --calculate --db rag.db
 github.com/christiancadieux/rag-go-ollama/pkg/ollama
 github.com/christiancadieux/rag-go-ollama/cmd/rag
 Using LLM: http://alien:11434
@@ -98,7 +101,7 @@ Inserting into embeddings, id 195
 Inserting into embeddings, id 196
 Inserting into embeddings, id 197
 
-go22 run ./cmd/rag --answer --db rag.db
+./rago --answer --db rag.db
 Using LLM: http://alien:11434
 path: docs/rdei.md, content: 146, embedding: 16384
 docs/rdei.md 0.107603274
@@ -158,7 +161,7 @@ Response.choices[0]:
 ```
 $ export OLLAMA_MODEL=gemma
 # make sure you have loaded gemma with `ollama pull gemma` on your LLM server.
-$ make
+$ make test
 ...
 
 Question: what is a RDEI team? 

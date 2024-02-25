@@ -1,44 +1,38 @@
-package main
+package ragollama
 
 import (
 	"bufio"
 	"bytes"
 	"database/sql"
-	"flag"
 	"fmt"
+	"github.com/pkoukk/tiktoken-go"
 	"io/fs"
 	"log"
 	"os"
 	"path/filepath"
-
-	_ "github.com/mattn/go-sqlite3"
-	"github.com/pkoukk/tiktoken-go"
 )
 
-const tokenEncoding = "cl100k_base"
-const tableName = "chunks"
-const chunkSize = 1000
+const (
+	tokenEncoding = "cl100k_base"
+	tableName     = "chunks"
+	chunkSize     = 1000
+	tableSql      = `CREATE TABLE IF NOT EXISTS %v (
+	  id INTEGER PRIMARY KEY AUTOINCREMENT,
+	  path TEXT,
+	  nchunk INTEGER,
+	  content TEXT
+     );`
+)
 
-const tableSql = `CREATE TABLE IF NOT EXISTS %v (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  path TEXT,
-  nchunk INTEGER,
-  content TEXT
-);`
+func (ol *RagollamaClient) Chunks(clear bool, rootDir string) {
 
-func main() {
-	rootDir := flag.String("rootdir", "./docs", ".md docs directory")
-	doClear := flag.Bool("clear", false, "clear DB table before inserting")
-	outDb := flag.String("outdb", "rag.db", "sqlite DB name")
-	flag.Parse()
-
-	db, err := sql.Open("sqlite3", *outDb)
+	db, err := sql.Open("sqlite3", ol.dbPath)
 	checkErr(err)
 
 	_, err = db.Exec(fmt.Sprintf(tableSql, tableName))
 	checkErr(err)
 
-	if *doClear {
+	if clear {
 		log.Printf("Clearing DB table %v", tableName)
 		_, err := db.Exec(fmt.Sprintf("delete from %s", tableName))
 		checkErr(err)
@@ -48,7 +42,7 @@ func main() {
 	checkErr(err)
 
 	tokTotal := 0
-	err = filepath.WalkDir(*rootDir, func(path string, d fs.DirEntry, err error) error {
+	err = filepath.WalkDir(rootDir, func(path string, d fs.DirEntry, err error) error {
 		if filepath.Ext(path) == ".md" {
 			log.Printf("Chunking %v", path)
 			chunks := breakToChunks(path)
@@ -64,12 +58,6 @@ func main() {
 		return nil
 	})
 	fmt.Println("Total tokens:", tokTotal)
-}
-
-func checkErr(err error) {
-	if err != nil {
-		panic(err)
-	}
 }
 
 // breakToChunks reads the file in `path` and breaks it into chunks of

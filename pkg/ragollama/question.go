@@ -19,10 +19,10 @@ const (
 	MAX_SCORES = 3
 )
 
-func (ol *RagollamaClient) AnswerQuestion(dbPath string, question1 string) {
+func (ol *RagollamaClient) AnswerQuestion(question1 string) {
 
 	// Connect to the SQLite database
-	db, err := sql.Open("sqlite3", dbPath)
+	db, err := sql.Open("sqlite3", ol.dbPath)
 	checkErr(err)
 	defer db.Close()
 

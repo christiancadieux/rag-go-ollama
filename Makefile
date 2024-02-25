@@ -4,14 +4,19 @@
 # OLLAMA_MODEL=mistral
 # set export GO=go
 
-all: chunk calc q
+
+build:
+	${GO} build -o rago ./cmd/rag/...
+
+
+test: chunk calc q
 
 chunk:
-	${GO} run ./cmd/chunker --outdb rag.db --clear 
+	./rago --chunk --db rag.db --clear 
 
 
 calc:
-	${GO} run -v  ./cmd/rag --calculate --db rag.db
+	./rago --calculate --db rag.db
 
 q:
-	${GO} run ./cmd/rag --answer --db rag.db
+	./rago --answer --db rag.db

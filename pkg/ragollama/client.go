@@ -19,6 +19,7 @@ type RagollamaClient struct {
 	config openai.ClientConfig
 	client *openai.Client
 	ctx    context.Context
+	dbPath string
 }
 
 func GetOllamaUrl() string {
@@ -37,9 +38,9 @@ func GetOllamaModel() string {
 	return ollama_model
 }
 
-func NewRagollama() *RagollamaClient {
+func NewRagollama(dbPath string) *RagollamaClient {
 	cl, cfg := NewClientWithBase(GetOllamaUrl())
-	return &RagollamaClient{client: cl, config: cfg, ctx: context.Background()}
+	return &RagollamaClient{dbPath: dbPath, client: cl, config: cfg, ctx: context.Background()}
 }
 
 func checkErr(err error) {
