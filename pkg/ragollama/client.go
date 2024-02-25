@@ -43,20 +43,15 @@ func NewRagollama(dbPath string) *RagollamaClient {
 	return &RagollamaClient{dbPath: dbPath, client: cl, config: cfg, ctx: context.Background()}
 }
 
-func checkErr(err error) {
-	if err != nil {
-		panic(err)
-	}
-}
-
 // getEmbedding invokes the OpenAI embedding API to calculate the embedding
 // for the given string. It returns the embedding.
-func (o *RagollamaClient) GetEmbedding(data string) []float32 {
+func (o *RagollamaClient) GetEmbedding(data string) ([]float32, error) {
 
 	queryResponse, err := o.CreateEmbeddingsOllama(GetOllamaUrl(), GetOllamaModel(), data)
-
-	checkErr(err)
-	return queryResponse.Data[0].Embedding
+	if err != nil {
+		return nil, err
+	}
+	return queryResponse.Data[0].Embedding, nil
 }
 
 func NewClientWithBase(base string) (*openai.Client, openai.ClientConfig) {

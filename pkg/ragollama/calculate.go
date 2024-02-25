@@ -14,22 +14,30 @@ const (
 		 )`
 )
 
-func (ol *RagollamaClient) CalculateEmbeddings() {
+func (ol *RagollamaClient) CalculateEmbeddings() error {
 
 	db, err := sql.Open("sqlite3", ol.dbPath)
-	checkErr(err)
+	if err != nil {
+		return fmt.Errorf("sql.Open - %v", err)
+	}
 	defer db.Close()
 
 	log.Println("Creating embeddings table if needed")
 	_, err = db.Exec(CREATE_EMBEDDINGS)
-	checkErr(err)
+	if err != nil {
+		return fmt.Errorf("db.Exec - %v", err)
+	}
 
 	log.Println("Clearing embeddings table")
 	_, err = db.Exec(`DELETE FROM embeddings`)
-	checkErr(err)
+	if err != nil {
+		return err
+	}
 
 	rows, err := db.Query("SELECT * FROM chunks")
-	checkErr(err)
+	if err != nil {
+		return fmt.Errorf("db.Exec - %v", err)
+	}
 	defer rows.Close()
 
 	// calculate embeddings for all chunks in the DB, storing them in embs.
@@ -48,17 +56,25 @@ func (ol *RagollamaClient) CalculateEmbeddings() {
 			content string
 		)
 		err = rows.Scan(&id, &path, &nchunk, &content)
-		checkErr(err)
-
+		if err != nil {
+			return fmt.Errorf("rows.Scan - %v", err)
+		}
 		fmt.Printf("id: %d, path: %s, nchunk: %d, content: %d\n", id, path, nchunk, len(content))
 		if len(content) > 0 {
-			emb := encodeEmbedding(ol.GetEmbedding(content))
+			emb0, err := ol.GetEmbedding(content)
+			if err != nil {
+				return err
+			}
+			emb, err := encodeEmbedding(emb0)
+			if err != nil {
+				return err
+			}
 			embs = append(embs, embData{id, emb})
 		}
 	}
 
 	if err = rows.Err(); err != nil {
-		log.Fatal(err)
+		return err
 	}
 	rows.Close()
 
@@ -66,6 +82,9 @@ func (ol *RagollamaClient) CalculateEmbeddings() {
 	for _, emb := range embs {
 		fmt.Println("Inserting into embeddings, id", emb.id)
 		_, err = db.Exec("INSERT INTO embeddings VALUES (?, ?)", emb.id, emb.data)
-		checkErr(err)
+		if err != nil {
+			return fmt.Errorf("insert embeddings - %v", err)
+		}
 	}
+	return nil
 }

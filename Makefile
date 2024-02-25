@@ -21,3 +21,6 @@ calc:
 
 q:
 	./rago --answer
+
+q2:
+	./rago --answer -q 'What is RDEI'

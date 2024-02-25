@@ -24,50 +24,67 @@ const (
      );`
 )
 
-func (ol *RagollamaClient) Chunks(clear bool, rootDir string) {
+func (ol *RagollamaClient) Chunks(clear bool, rootDir string) error {
 
 	db, err := sql.Open("sqlite3", ol.dbPath)
-	checkErr(err)
+	if err != nil {
+		return fmt.Errorf("sql.Open - %v", err)
+	}
 
 	_, err = db.Exec(fmt.Sprintf(tableSql, tableName))
-	checkErr(err)
+	if err != nil {
+		return fmt.Errorf("db.Exec - %v", err)
+	}
 
 	if clear {
 		log.Printf("Clearing DB table %v", tableName)
 		_, err := db.Exec(fmt.Sprintf("delete from %s", tableName))
-		checkErr(err)
+		if err != nil {
+			return fmt.Errorf("db.Exec - %v", err)
+		}
 	}
 
 	insertStmt, err := db.Prepare("insert into chunks(path, nchunk, content) values(?, ?, ?)")
-	checkErr(err)
+	if err != nil {
+		return fmt.Errorf("db.Prepare - %v", err)
+	}
 
 	tokTotal := 0
 	err = filepath.WalkDir(rootDir, func(path string, d fs.DirEntry, err error) error {
 		if filepath.Ext(path) == ".md" {
 			log.Printf("Chunking %v", path)
-			chunks := breakToChunks(path)
-
+			chunks, err := breakToChunks(path)
+			if err != nil {
+				return err
+			}
 			for i, chunk := range chunks {
 				fmt.Println(path, i, len(chunk))
 				tokTotal += len(chunk)
 				_, err := insertStmt.Exec(path, i, chunk)
-				checkErr(err)
+				if err != nil {
+					return err
+				}
 			}
 
 		}
 		return nil
 	})
 	fmt.Println("Total tokens:", tokTotal)
+	return nil
 }
 
 // breakToChunks reads the file in `path` and breaks it into chunks of
 // approximately chunkSize tokens each, returning the chunks.
-func breakToChunks(path string) []string {
+func breakToChunks(path string) ([]string, error) {
 	f, err := os.Open(path)
-	checkErr(err)
+	if err != nil {
+		return nil, err
+	}
 
 	tke, err := tiktoken.GetEncoding(tokenEncoding)
-	checkErr(err)
+	if err != nil {
+		return nil, err
+	}
 
 	chunks := []string{""}
 
@@ -88,7 +105,7 @@ func breakToChunks(path string) []string {
 		chunks = chunks[:len(chunks)-1]
 	}
 
-	return chunks
+	return chunks, nil
 }
 
 // splitByParagraph is a custom split function for bufio.Scanner to split by

@@ -28,13 +28,24 @@ func main() {
 
 	fmt.Printf("Using LLL=%s, model=%s \n", ragollama.GetOllamaUrl(), ragollama.GetOllamaModel())
 
+	var err error
+
 	if *doChunk {
-		ol.Chunks(*doClear, *rootDir)
+		err = ol.Chunks(*doClear, *rootDir)
+		if err != nil {
+			fmt.Printf("Chunks - %v \n", err)
+		}
 
 	} else if *doCalculate {
-		ol.CalculateEmbeddings()
+		err = ol.CalculateEmbeddings()
+		if err != nil {
+			fmt.Printf("CalculateEmbeddings - %v \n", err)
+		}
 
 	} else if *doAnswer {
-		ol.AnswerQuestion(*question1)
+		err = ol.AnswerQuestion(*question1)
+		if err != nil {
+			fmt.Printf("AnwerQuestion - %v \n", err)
+		}
 	}
 }

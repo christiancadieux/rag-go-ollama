@@ -136,17 +136,19 @@ func (o *RagollamaClient) buildReq(
 
 // encodeEmbedding encodes an embedding into a byte buffer, e.g. for DB
 // storage as a blob.
-func encodeEmbedding(emb []float32) []byte {
+func encodeEmbedding(emb []float32) ([]byte, error) {
 	buf := new(bytes.Buffer)
 	for _, f := range emb {
 		err := binary.Write(buf, binary.LittleEndian, f)
-		checkErr(err)
+		if err != nil {
+			return nil, err
+		}
 	}
-	return buf.Bytes()
+	return buf.Bytes(), nil
 }
 
 // decodeEmbedding decodes an embedding back from a byte buffer.
-func decodeEmbedding(b []byte) []float32 {
+func decodeEmbedding(b []byte) ([]float32, error) {
 	var numbers []float32
 	buf := bytes.NewReader(b)
 
@@ -156,10 +158,12 @@ func decodeEmbedding(b []byte) []float32 {
 	for i := 0; i < count; i++ {
 		var num float32
 		err := binary.Read(buf, binary.LittleEndian, &num)
-		checkErr(err)
+		if err != nil {
+			return nil, err
+		}
 		numbers = append(numbers, num)
 	}
-	return numbers
+	return numbers, nil
 }
 
 // cosineSimilarity calculates cosine similarity (magnitude-adjusted dot

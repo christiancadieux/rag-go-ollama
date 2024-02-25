@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/sashabaranov/go-openai"
-	"log"
 	"slices"
 	"time"
 )
@@ -19,54 +18,60 @@ const (
 	MAX_SCORES = 3
 )
 
-func (ol *RagollamaClient) AnswerQuestion(question1 string) {
-
+func (ol *RagollamaClient) getRows() (*sql.Rows, error) {
 	db, err := sql.Open("sqlite3", ol.dbPath)
-	checkErr(err)
+	if err != nil {
+		return nil, err
+	}
 	defer db.Close()
 
 	// SQL query to extract chunks' content along with embeddings.
 	stmt, err := db.Prepare(QUERY_CHUNKS)
-	checkErr(err)
+	if err != nil {
+		return nil, err
+	}
 	defer stmt.Close()
 
 	rows, err := stmt.Query()
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
-	defer rows.Close()
+	return rows, nil
+}
 
-	type scoreRecord struct {
-		Path    string
-		Score   float32
-		Content string
-	}
+type scoreRecord struct {
+	Path    string
+	Score   float32
+	Content string
+}
+
+func (ol *RagollamaClient) getContextInfo(qEmb []float32, rows *sql.Rows, max_scores int) (string, error) {
+
 	var scores []scoreRecord
 
-	// Iterate through the rows, scoring each chunk with cosine similarity to
-	// the question's embedding.
-	qEmb := ol.GetEmbedding(question1)
 	for rows.Next() {
 		var (
 			path      string
 			content   string
 			embedding []byte
 		)
-
-		err = rows.Scan(&path, &content, &embedding)
+		err := rows.Scan(&path, &content, &embedding)
 		if err != nil {
-			log.Fatal(err)
+			return "", err
 		}
 
-		contentEmb := decodeEmbedding(embedding)
+		contentEmb, err := decodeEmbedding(embedding)
+		if err != nil {
+			return "", err
+		}
 		score := cosineSimilarity(qEmb, contentEmb)
 		scores = append(scores, scoreRecord{path, score, content})
 
 		fmt.Printf("path: %s, score: %v, content: %d, embedding: %d\n", path, score, len(content), len(embedding))
 		// fmt.Println(path, score)
 	}
-	if err = rows.Err(); err != nil {
-		log.Fatal(err)
+	if err := rows.Err(); err != nil {
+		return "", err
 	}
 
 	slices.SortFunc(scores, func(a, b scoreRecord) int {
@@ -75,23 +80,42 @@ func (ol *RagollamaClient) AnswerQuestion(question1 string) {
 		return int(100.0 * (a.Score - b.Score))
 	})
 
-	// Take the 3 best-scoring chunks as context and paste them together into
-	// contextInfo.
+	// Take the 3 best-scoring chunks
 	var contextInfo string
 
 	if len(scores) == 0 {
 		fmt.Println("No scores found")
-		return
+		return "", nil
 	}
 
 	cnt := 0
 	for i := len(scores) - 1; i >= 0; i-- {
-		// fmt.Printf("Score %d - %v - %s\n", i, scores[i].Score, scores[i].Path)
 		contextInfo = contextInfo + "\n" + scores[i].Content
 		cnt++
-		if cnt >= MAX_SCORES {
+		if cnt >= max_scores {
 			break
 		}
+	}
+	return contextInfo, nil
+
+}
+
+func (ol *RagollamaClient) AnswerQuestion(question1 string) error {
+
+	rows, err := ol.getRows()
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	qEmb, err := ol.GetEmbedding(question1)
+	if err != nil {
+		return err
+	}
+
+	contextInfo, err := ol.getContextInfo(qEmb, rows, MAX_SCORES)
+	if err != nil {
+		return err
 	}
 
 	query := fmt.Sprintf(`Use the below information to answer the subsequent question.
@@ -100,8 +124,9 @@ Information:
 
 Question: %v`, contextInfo, question1)
 
-	fmt.Println("============== QUERY =====================\n", query, "\n===================================\n")
+	fmt.Println("--------------- QUERY -------------------\n", query, "\n-------------------------------------------\n")
 	start := time.Now()
+
 	resp, err := ol.CreateChatCompletion(
 		openai.ChatCompletionRequest{
 			Model: GetOllamaModel(),
@@ -113,15 +138,18 @@ Question: %v`, contextInfo, question1)
 			},
 		},
 	)
-	checkErr(err)
+	if err != nil {
+		return err
+	}
 
 	fmt.Println("Got response, ID:", resp.ID, "Duration:", time.Now().Sub(start))
 	b, err := json.MarshalIndent(resp, "", "  ")
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	fmt.Println(string(b))
 
 	choice := resp.Choices[0]
 	fmt.Println("Response.choices[0]:\n" + choice.Message.Content)
+	return nil
 }
