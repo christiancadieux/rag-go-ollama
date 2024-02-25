@@ -7,7 +7,7 @@ Golang Retrieval-Augmented Generation (RAG) application using ollama:
    - Pure GO implementation.
    - Using ollama with O/S LLMs running locally (Mistral, Gemma etc..).
    - Using github.com/sashabaranov/go-openai.
-   - Based on github.com/eliben/code-for-blog/2023/go-rag-openai - updated to use ollama, error-handling, classes etc...
+   - Based on github.com/eliben/code-for-blog/2023/go-rag-openai - updated for ollama, error-handling, classes etc...
 
 https://eli.thegreenplace.net/2023/retrieval-augmented-generation-in-go/
 
@@ -21,13 +21,14 @@ Start ollama on a server with GPU:
 $ export OLLAMA_HOST=0.0.0.0:11434
 $ ollama serve
 
-# load and test model
+# load and try model
 $ ollama run mistral
 
 # run ollama on a different server
 $ export OLLAMA_HOST=[your-ollama-server]:11434
 $ ollama run mistral
 ...
+Ctrl-C
 
 ```
 
