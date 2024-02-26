@@ -1,5 +1,5 @@
 
-## Rag-Go-Ollama (pronounced 'ragolama')
+## Rag-Go-Ollama (ragolama)
 
 
 Golang Retrieval-Augmented Generation (RAG) application using ollama:
